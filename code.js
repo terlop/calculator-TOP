@@ -93,8 +93,8 @@ function populate() {
 
 
 // array of IDs of all buttons 
-// const buttIDs = ['+', '1', '4', '7', '0', 'x', '2', '5', '8', '.', '-', '3', '6', '9', '/', '+/-', '^']
-const buttIDs = ['1', '4', '7', '0', '2', '5', '8','3', '6', '9']
+const buttIDs = ['+', '1', '4', '7', '0', 'x', '2', '5', '8', '.', '-', '3', '6', '9', '/', '+/-', '^']
+// const buttIDs = ['1', '4', '7', '0', '2', '5', '8','3', '6', '9']
 let storedValues = []
 let stringOfValues = ''
 const display = document.querySelector('#numbers-field')
@@ -135,6 +135,8 @@ function whenAllInputed() {
     let retValue = operate(leftNums, sign, rightNums)
     display.textContent = retValue
     stringOfValues = '' + retValue
+    storedValues = []
+    storedValues.push(retValue)
     // stringOfValues = '' + retValue
     console.log(retValue)
     // return retValue
@@ -144,27 +146,26 @@ function whenAllInputed() {
 }
 
 // making a fucntion which forces every operator to do the expression when its pressed 
-let leftValue = 0
-let operatorButtons = ['+', '/', '-', 'x', '^']
-operatorButtons.forEach((button) => {
-    let btn = document.getElementById(button)
-    btn.addEventListener('click', () => { 
-        storedValues.push(button)
-        stringOfValues += button
-        display.textContent = stringOfValues
-        whenAllInputed()
+// let leftValue = 0
+// let operatorButtons = ['+', '/', '-', 'x', '^']
+// operatorButtons.forEach((button) => {
+//     let btn = document.getElementById(button)
+//     btn.addEventListener('click', () => { 
+//         storedValues.push(button)
+//         stringOfValues += button
+//         display.textContent = stringOfValues
+//         whenAllInputed()
          
 
 
-    })
-})
+//     })
+// })
 
 // function to evaluate the expression 
 let equals = document.getElementById("=")
 equals.addEventListener('click', () => {
     // return storedValues.reduce((a, b) => {return a + b})
     whenAllInputed()
-    display.textContent = storedValues.reduce((a, b) => a + b, 0)
 })
 
 // function to clear the storedValues and display
