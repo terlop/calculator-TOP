@@ -63,7 +63,7 @@ let buttonsdiv = document.querySelector('#buttons')
 let clmn1 = ['+', '1', '4', '7', '0']
 let clmn2 = ['x', '2', '5', '8', '.']
 let clmn3 = ['-', '3', '6', '9', 'clear']
-let clmn4 = ['/', 'del', '+/-', '^', '=' ]
+let clmn4 = ['/', 'del', '%', '^', '=' ]
 
 // creating every column
 for (let i=0; i < 4; i++) {
@@ -93,7 +93,7 @@ function populate() {
 
 
 // array of IDs of all buttons 
-const buttIDs = ['+', '1', '4', '7', '0', 'x', '2', '5', '8', '.', '-', '3', '6', '9', '/', '+/-', '^']
+const buttIDs = ['+', '1', '4', '7', '0', 'x', '2', '5', '8', '.', '-', '3', '6', '9', '/', '%', '^']
 // const buttIDs = ['1', '4', '7', '0', '2', '5', '8','3', '6', '9']
 let storedValues = []
 let stringOfValues = ''
@@ -122,7 +122,7 @@ function whenAllInputed() {
     let sign = []
     let rightNums = []
     for (val of storedValues) {
-        if (['+', '/', '-', 'x', '^'].includes(val)){
+        if (['+', '/', '-', 'x', '^', '%'].includes(val)){
             leftNums.push(stringOfValues.split(val)[0])
             sign.push(val)
             rightNums.push(stringOfValues.split(val)[1])
@@ -152,11 +152,11 @@ let equals = document.getElementById("=")
 equals.addEventListener('click', () => {
     // return storedValues.reduce((a, b) => {return a + b})
     whenAllInputed()
-    operatorsCount = 0
+    operatorsCount = 1
 })
 
 // forcing equalization of expression when there are more than one operator in whole expression 
-let operation_buttons = ['+', '/', '-', 'x', '^']
+let operation_buttons = ['+', '/', '-', 'x', '^', '%']
 let operatorsCount = 0
 operation_buttons.forEach((button) => { 
     let oper = document.getElementById(button)
@@ -167,7 +167,7 @@ operation_buttons.forEach((button) => {
             // stringOfValues = stringOfValues + button
             // storedValues.push(button)
             display.textContent = stringOfValues
-            operatorsCount = 0
+            operatorsCount = 1
         }
     })
 })
@@ -178,12 +178,17 @@ clear.addEventListener('click', () => {
     display.textContent = ''
     storedValues = []
     stringOfValues = ''
+    operatorsCount = 0
 })
 
  // function for a button del which will delete last element in this expression 
 let del = document.querySelector('#del')
 del.addEventListener('click', () => {
     storedValues.pop(storedValues.length-1)
+    let poped = stringOfValues[stringOfValues.length-1]
+    if (['+', '/', '-', 'x', '^'].includes(poped)) {
+        operatorsCount--
+    }
     stringOfValues = stringOfValues.slice(0, -1)
     display.textContent = stringOfValues
 })

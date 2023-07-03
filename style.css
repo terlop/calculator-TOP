@@ -1,7 +1,7 @@
 body {
     display: flex;
     flex-direction: column;
-    background-color: antiquewhite;
+    background-color: wheat;
     align-items: center;
     flex-grow: 0;
     
@@ -12,11 +12,16 @@ body {
     display: flex;
     flex-direction: column;
     border-style:solid;
-    border-width: 3px;
+    border-color: grey;
+    border-width: 1px;
     flex-grow: 0;
     flex-shrink: 1;
     flex-basis: 0;
-
+    background-color: antiquewhite;
+    padding: 10px;
+    gap: 8px;
+    box-shadow: 6px 6px 0px grey;
+    border-radius: 10px;
 }
 
 #numbers-field {
@@ -31,13 +36,13 @@ body {
     align-items: center;
     justify-content: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    white-space: nowrap; 
+
     overflow: hidden;
-    text-overflow: ellipsis;
+
 }
 
 #buttons {
-
+    background-color: antiquewhite;
     display: flex;
     background-color: antiquewhite;
     flex-shrink: 1;
