@@ -11,7 +11,7 @@ function divide(a=0, b=0) {
     return a / b
 }
 function power(a=0, b=0) {
-    a ** b
+    return a ** b
 }
 function changesign(a=0, b=0) {
     if (a > 0) {
@@ -145,27 +145,31 @@ function whenAllInputed() {
     
 }
 
-// making a fucntion which forces every operator to do the expression when its pressed 
-// let leftValue = 0
-// let operatorButtons = ['+', '/', '-', 'x', '^']
-// operatorButtons.forEach((button) => {
-//     let btn = document.getElementById(button)
-//     btn.addEventListener('click', () => { 
-//         storedValues.push(button)
-//         stringOfValues += button
-//         display.textContent = stringOfValues
-//         whenAllInputed()
-         
 
-
-//     })
-// })
 
 // function to evaluate the expression 
 let equals = document.getElementById("=")
 equals.addEventListener('click', () => {
     // return storedValues.reduce((a, b) => {return a + b})
     whenAllInputed()
+    operatorsCount = 0
+})
+
+// forcing equalization of expression when there are more than one operator in whole expression 
+let operation_buttons = ['+', '/', '-', 'x', '^']
+let operatorsCount = 0
+operation_buttons.forEach((button) => { 
+    let oper = document.getElementById(button)
+    oper.addEventListener('click', () => {
+        operatorsCount++ 
+        if (operatorsCount > 1) {
+            whenAllInputed()
+            // stringOfValues = stringOfValues + button
+            // storedValues.push(button)
+            display.textContent = stringOfValues
+            operatorsCount = 0
+        }
+    })
 })
 
 // function to clear the storedValues and display
@@ -176,7 +180,13 @@ clear.addEventListener('click', () => {
     stringOfValues = ''
 })
 
-
+ // function for a button del which will delete last element in this expression 
+let del = document.querySelector('#del')
+del.addEventListener('click', () => {
+    storedValues.pop(storedValues.length-1)
+    stringOfValues = stringOfValues.slice(0, -1)
+    display.textContent = stringOfValues
+})
 
 
 
