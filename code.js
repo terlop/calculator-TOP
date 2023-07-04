@@ -171,21 +171,20 @@ let operation_buttons = ['+', '/', '-', 'x', '^', '%']
 let operatorsCount = 0
 operation_buttons.forEach((button) => { 
     let oper = document.getElementById(button)
-    operatorsExpessing(oper)
+    oper.addEventListener('click', () => {
+        operatorsExpessing()
+    })
 })
 
 /// all functions 
+
 function operatorsExpessing(oper) {
-    oper.addEventListener('click', () => {
-        operatorsCount++ 
+    operatorsCount++ 
         if (operatorsCount > 1) {
             whenAllInputed()
-            // stringOfValues = stringOfValues + button
-            // storedValues.push(button)
             display.textContent = stringOfValues
             operatorsCount = 1
         }
-    })
 }
 
 function equalFunc() {
