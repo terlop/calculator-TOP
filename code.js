@@ -105,7 +105,7 @@ buttIDs.forEach(id => {
     document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', () => {
             storedValues.push(button.id)
-            stringOfValues += button.id
+            stringOfValues += button.id 
             display.textContent = stringOfValues
             
         })
@@ -119,41 +119,52 @@ buttIDs.forEach(id => {
 
 function whenAllInputed() {
     let leftNums = []
-    let sign = []
+    let sign
     let rightNums = []
-    for (val of storedValues) {
-        if (['+', '/', '-', 'x', '^', '%'].includes(val)){
-            leftNums.push(stringOfValues.split(val)[0])
-            sign.push(val)
-            rightNums.push(stringOfValues.split(val)[1])
+    let allSigns = []
+    for (val of storedValues.join('')) {
+        if (['+', '/', '-', 'x', '^', '%'].includes(val)) {
+            allSigns.push(val)
         }
-        
     }
-    leftNums = parseInt(leftNums[0])
-    sign = sign[0]
-    rightNums = parseInt(rightNums[0]) || 0
+    
+    let MinusAt
+    let countAllMinuses = 0
+    for (let i = 0; i < stringOfValues.length; i++) {
+        if (stringOfValues[i] == '-') {
+            MinusAt = i
+            countAllMinuses++
+        }
+    }
+    if (countAllMinuses > 1) {
+        leftNums = [stringOfValues.slice(0, MinusAt)]
+        sign = '-'
+        rightNums = [stringOfValues.slice(MinusAt+1)]
+    }  
+    else if (allSigns.length > 1) {
+        let splitSign = allSigns[1]
+        leftNums.push(stringOfValues.split(splitSign)[0])
+        sign = splitSign    
+        rightNums.push(stringOfValues.split(splitSign)[1])
+    }   
+    else {
+        let splitSign = allSigns[0]
+        leftNums.push(stringOfValues.split(splitSign)[0])
+        sign = splitSign
+        rightNums.push(stringOfValues.split(splitSign)[1])
+    }
+    
+    leftNums = parseFloat(leftNums[0]) || 0
+    rightNums = parseFloat(rightNums[0]) || 0
+    
     let retValue = operate(leftNums, sign, rightNums)
     display.textContent = retValue
     stringOfValues = '' + retValue
-    storedValues = []
-    storedValues.push(retValue)
-    // stringOfValues = '' + retValue
-    console.log(retValue)
-    // return retValue
-    console.log([leftNums, sign, rightNums])
-    // console.log(operate(leftNums, sign, rightNums))
-    
+    storedValues = [retValue]
+
 }
 
 
-
-// function to evaluate the expression 
-let equals = document.getElementById("=")
-equals.addEventListener('click', () => {
-    // return storedValues.reduce((a, b) => {return a + b})
-    whenAllInputed()
-    operatorsCount = 1
-})
 
 // forcing equalization of expression when there are more than one operator in whole expression 
 let operation_buttons = ['+', '/', '-', 'x', '^', '%']
@@ -170,6 +181,14 @@ operation_buttons.forEach((button) => {
             operatorsCount = 1
         }
     })
+})
+
+// function to evaluate the expression 
+let equals = document.getElementById("=")
+equals.addEventListener('click', () => {
+    // return storedValues.reduce((a, b) => {return a + b})
+    whenAllInputed()
+    operatorsCount = 0
 })
 
 // function to clear the storedValues and display
@@ -195,60 +214,15 @@ del.addEventListener('click', () => {
 
 
 
+const allKeys = ['+', '1', '4', '7', '0', 'x', '2', '5', '8', '.', '-', '3', '6', '9', '/', '%', '^', '=']
+document.addEventListener('keydown', (event) => {
+    let name = event.key
+    let code = event.code
+    if (allKeys.includes(`${name}`)) {
+        storedValues.push(name)
+        stringOfValues += name
+        display.textContent = stringOfValues
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const ids = ['+', '1', '4', '7', '0', 'x', '2', '5', '8', '.', '-', '3', '6', '9', 'clear', '/', 'del', '+/-', '^', '=' ]
-// let storedValues = []
-// let allbuttons = document.querySelectorAll('button')
-// allbuttons.forEach(button => {
-//     button.addEventListener('click', () => {
-//         storedValues.push(button.id)
-//         console.log(storedValues)
-//         const display = document.querySelector('#numbers-field')
-//         display.textContent = storedValues
-//     })
-// })
-
-
-// ids.forEach(id => {
-//     btn = document.getElementById(`#${id}`)
-//     btn.addEventListener('click', () => {
-//         storedValues.push(btn.id)
-//     })
-// })
-
-
-
-
-
-// allColumns.forEach((column) => {
-//     let cl = document.querySelector(`#c${allColumns.indexOf(column)}`)
-//     column.forEach((button) => {
-//         let btn = document.createElement('button')
-//         btn.textContent = `${button}`  
-//         btn.setAttribute('id', `${button}`)
-//         cl.appendChild(btn)
-
-//     })
-// })
-
-
-
-// buttons.forEach((button) => {
-//     let btn = document.createElement('button')
-//     btn.textContent = button
-//     btn.setAttribute('id', `${button}`)
-//    buttonsdiv.appendChild(btn)
-// })
+    console.log(name, ' ', code)
+},false)
