@@ -171,6 +171,11 @@ let operation_buttons = ['+', '/', '-', 'x', '^', '%']
 let operatorsCount = 0
 operation_buttons.forEach((button) => { 
     let oper = document.getElementById(button)
+    operatorsExpessing(oper)
+})
+
+/// all functions 
+function operatorsExpessing(oper) {
     oper.addEventListener('click', () => {
         operatorsCount++ 
         if (operatorsCount > 1) {
@@ -181,28 +186,22 @@ operation_buttons.forEach((button) => {
             operatorsCount = 1
         }
     })
-})
+}
 
-// function to evaluate the expression 
-let equals = document.getElementById("=")
-equals.addEventListener('click', () => {
-    // return storedValues.reduce((a, b) => {return a + b})
-    whenAllInputed()
+function equalFunc() {
     operatorsCount = 0
-})
+    whenAllInputed()
+    
+}
 
-// function to clear the storedValues and display
-let clear = document.querySelector('#clear')  // clear button 
-clear.addEventListener('click', () => {
+function clearFunc() {
     display.textContent = ''
     storedValues = []
     stringOfValues = ''
     operatorsCount = 0
-})
+}
 
- // function for a button del which will delete last element in this expression 
-let del = document.querySelector('#del')
-del.addEventListener('click', () => {
+function delFunction() {
     storedValues.pop(storedValues.length-1)
     let poped = stringOfValues[stringOfValues.length-1]
     if (['+', '/', '-', 'x', '^'].includes(poped)) {
@@ -210,6 +209,25 @@ del.addEventListener('click', () => {
     }
     stringOfValues = stringOfValues.slice(0, -1)
     display.textContent = stringOfValues
+}
+///
+
+// function to evaluate the expression 
+let equals = document.getElementById("=")
+equals.addEventListener('click', () => {
+   equalFunc()
+})
+
+// function to clear the storedValues and display
+let clear = document.querySelector('#clear')  // clear button 
+clear.addEventListener('click', () => {
+    clearFunc()
+})
+
+ // function for a button del which will delete last element in this expression 
+let del = document.querySelector('#del')
+del.addEventListener('click', () => {
+    delFunction()
 })
 
 
