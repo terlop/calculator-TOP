@@ -172,19 +172,20 @@ let operatorsCount = 0
 operation_buttons.forEach((button) => { 
     let oper = document.getElementById(button)
     oper.addEventListener('click', () => {
-        operatorsExpessing()
+        operatorsExpressing()
     })
 })
 
 /// all functions 
 
-function operatorsExpessing(oper) {
+function operatorsExpressing() {
     operatorsCount++ 
         if (operatorsCount > 1) {
             whenAllInputed()
             display.textContent = stringOfValues
             operatorsCount = 1
         }
+        console.log('express')
 }
 
 function equalFunc() {
@@ -231,15 +232,34 @@ del.addEventListener('click', () => {
 
 
 
-const allKeys = ['+', '1', '4', '7', '0', 'x', '2', '5', '8', '.', '-', '3', '6', '9', '/', '%', '^', '=']
+const allKeys = ['+', '1', '4', '7', '0', 'x', '2', '5', '8', '.', '-', '3', '6', '9', '/', '%', '^']
+const nums = ['1', '4', '7', '0', '2', '5', '8', '3', '6', '9', '.']
+
 document.addEventListener('keydown', (event) => {
     let name = event.key
     let code = event.code
-    if (allKeys.includes(`${name}`)) {
-        storedValues.push(name)
-        stringOfValues += name
-        display.textContent = stringOfValues
-    }
 
-    console.log(name, ' ', code)
+    if (nums.includes(`${name}`)) {
+        stringOfValues += name
+        storedValues.push(`${name}`)
+    }
+   
+    else if (['+', '/', '-', 'x', '^', '%'].includes(`${name}`)){
+        
+        operatorsExpressing()
+        stringOfValues += name
+        storedValues.push(`${name}`)
+    }
+    else if (name == '=') {
+        equalFunc()
+    }
+    else if (name == 'Backspace') {
+        delFunction()
+    }
+    else if (name == 'c') {
+        clearFunc()
+    }
+    display.textContent = stringOfValues
+
+    // console.log(name, ' ', code)
 },false)
